@@ -1,31 +1,63 @@
-# AirBnB_clone
-# THE CONSOLE
-The AirBnB Clone Console is the first part of the AirBnB project. The final product of the AirBnB project will be look-alike of the AirBnB website with some similar functionality.
-In this segment, a command line interprater is created to manage objects for the AirBnB-Clone project.
+<p align=center>
+    <img src="https://github.com/ShagizMan/AirBnB_clone/blob/master/assets/alx-bnb_logo.png" alt="logo_AirBnB">
+</p>
 
-<h3>The console is supposed to perform the following:</h3>
+<h1 align=center> AirBnB Clone </h1>
 
-* Create a new Object(...user, place, etc.)
-* Retrieve an object from a file eg. a database
-* Update an object and it's attributes
-* Perform operations on objects(...count objects, etc)
-* Destroy an object
+## Descriptions :house:
 
-## Unit tests
-|Classes|Unit tests|
-|-------|----------|
-|`BaseModel`|[test_base_model](./tests/test_models/test_base_model.py)|
+AirBnB is a complete web application, integrating database storage, a back-end API, and front-end interfacing in a clone of AirBnB.
 
-## Web Static
-* A static web implementation of the front end of the airbnb_clone
-* Made using mainly plain HTML & CSS.
+## Console :computer:
 
-## Authors
+The console is a command line interpreter that permits management of the backend of AirBnB. It can be used to handle and manipulate all classes utilized by the application.
 
-* Newton Nyabate
-* Sarah Kinyariro
+### Using the Console
 
-## Lisence
+The AirBnB console can be run both interactively and non-interactively. 
+To run the console in non-interactive mode, pipe any command(s) into an execution 
+of the file `console.py` at the command line.
 
-No copy write protection
+```
+$ echo "help" | ./console.py
+(hbnb) 
+Documented commands (type help <topic>):
+========================================
+EOF  all  count  create  destroy  help  quit  show  update
 
+(hbnb) 
+$
+```
+
+Alternatively, to use the AirBnB console in interactive mode, run the 
+file `console.py` by itself:
+
+```
+$ ./console.py
+```
+
+While running in interactive mode, the console displays a prompt for input:
+
+```
+$ ./console.py
+(hbnb) 
+```
+
+To quit the console, enter the command `quit`, or input an EOF signal 
+(`ctrl-D`).
+
+```
+$ ./console.py
+(hbnb) quit
+$
+```
+
+```
+$ ./console.py
+(hbnb) EOF
+$
+```
+
+## Authors :black_nib:
+* **Daniel Shibabaw** <[ShagizMan](https://github.com/ShagizMan)>
+* **Mercy Mukiri** <[MercyMukiri](https://github.com/MercyMukiri)>

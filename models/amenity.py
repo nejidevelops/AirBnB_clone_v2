@@ -1,16 +1,19 @@
 #!/usr/bin/python3
-"""
-The Amenity child-class
-"""
+""" Defines the Amenity class."""
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
-from models.base_model import BaseModel
-
-
-class Amenity(BaseModel):
-    """Represents an amenity"""
-    name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initialize Amenity subclass"""
-        super().__init__(*args, **kwargs)
+class Amenity(BaseModel, Base):
+    """
+    Represents class State.
+    Attributes:
+        __tablename__ (str): The name of the MySQL table to store amenities.
+        name (str): The name of the amenity object.
+        place_amenities (sqlalchemy relationship): Place-Amenity relationship.
+    """
+    __tablename__ = "amenities"
+    name = Column(String(128), nullable=False)
+    place_amenities = relationship("Place", secondary="place_amenity",
+                                   viewonly=True)

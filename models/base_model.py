@@ -1,55 +1,74 @@
 #!/usr/bin/python3
-"""
-This is base_model module
-Contains the BaseModel class
-"""
-
-
-from datetime import datetime
-import uuid
+""" Defines all common attributes/methods."""
 import models
+from uuid import uuid4
+from datetime import datetime
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-time = "%Y-%m-%dT%H:%M:%S.%f"
+Base = declarative_base()
 
 
 class BaseModel:
-    """The Basemodel class from which future classes will be derived"""
+    """ Represents the BaseModel of the AirBnB project.
+
+    Attributes:
+        id (sqlalchemy String): The BaseModel id.
+        created_at (sqlalchemy DateTime): The datetime at creation.
+        updated_at (sqlalchemy DateTime): The datetime of last update.
+    """
+
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-        """Initialization of the base model"""
+        """
+        Initialize a new BaseModel.
+
+        Args:
+            *args (any): Won't be used.
+            **kwargs (dict): Key/Value pairsof the attributes.
+        """
+        self.id = str(uuid4())
+        self.created_at = self.updated_at = datetime.utcnow()
+
         if kwargs:
             for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
-            if hasattr(self, "created_at") and type(self.created_at) is str:
-                self.created_at = datetime.strptime(kwargs["created_at"], time)
-            if hasattr(self, "updated_at") and type(self.updated_at) is str:
-                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
-
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
-            models.storage.new(self)
-            models.storage.save()
 
     def __str__(self):
-        """Returns a string representation of the BaseModel class"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
-                                         self.__dict__)
+        """ Return the print/str representation the BaseModel instance. """
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
-        """updates the public instance updated_at with the current datetime"""
-        self.updated_at = datetime.now()
+        """
+        Updates the public instance attribute updated_at
+        with the current datetime.
+        """
+        self.updated_at = datetime.utcnow()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Method that returns a dictionary containg all
-        keys/values of __dict__ of the instance"""
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        return new_dict
+        """
+        Returns a dictionary containing all keys/values of
+        __dict__ of the instance.
+        """
+        rdict = self.__dict__.copy()
+        rdict["__class__"] = str(type(self).__name__)
+        rdict["created_at"] = self.created_at.isoformat()
+        rdict["updated_at"] = self.updated_at.isoformat()
+        rdict.pop("_sa_instance_state", None)
+
+        return rdict
+
+    def delete(self):
+        """ Delete the current instance from the storage (models.storage)
+        by calling the method delete
+        """
+        models.storage.delete(self)
