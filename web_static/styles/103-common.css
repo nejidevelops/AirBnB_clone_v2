@@ -1,32 +1,21 @@
-/*
-* === Global Style === 
-*/
-
-/* Body Style */
 body {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    min-height: 100vh;
-    color: #484848;
-    font-size: 14px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #484848;
+  font: 14px Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* Container Style */
+/* Block horizontal scrolling */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Container style */
 .container {
-    margin: 30px auto;
-    max-width: 1000px;
-    height: 250%;
-    padding-bottom: 2.5rem;
+  margin: 30px auto;
+  max-width: 1000px;
 }
 
-/* Overall Tag Styles */
-* {
-    box-sizing: border-box;
-}
-
-/* HTML tag Styles */
-html {
-    height: 100vh;
+/* Strong style */
+strong {
+  font-weight: bold;
 }
